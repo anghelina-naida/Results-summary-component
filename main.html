@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results summary component</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon-32x32.png">
+    <style>
+        @font-face {
+            font-family: "Hanken Grotesk";
+            src: url("assets/fonts/HankenGrotesk-VariableFont_wght.ttf") format("truetype");
+            font-weight: 100 900;
+        }
+
+        :root {
+            --light-red: hsl(0, 100%, 67%);
+            --orangey-yellow: hsl(39, 100%, 56%);
+            --green-teal: hsl(166, 100%, 37%);
+            --cobalt-blue: hsl(234, 85%, 45%);
+            --light-slate-blue: hsl(252, 100%, 67%);
+            --light-royal-blue: hsl(241, 81%, 54%);
+            --violet-blue: hsla(256, 72%, 46%, 1);
+            --persian-blue: hsla(241, 72%, 46%, 0);
+            --white: hsl(0, 0%, 100%);
+            --pale-blue: hsl(221, 100%, 96%);
+            --light-lavender: hsl(241, 100%, 89%);
+            --dark-gray-blue: hsl(224, 30%, 27%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            font-family: "Hanken Grotesk", sans-serif;
+            background: var(--pale-blue);
+            color: var(--dark-gray-blue);
+        }
+
+        .main {
+            display: flex;
+            width: min(46rem, 100%);
+            background: var(--white);
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 1.5rem 3rem hsla(224, 30%, 27%, 0.15);
+        }
+
+        .result,
+        .summary {
+            width: 50%;
+            padding: 2.25rem 2.5rem;
+        }
+
+        .result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(var(--light-slate-blue), var(--light-royal-blue));
+            color: var(--light-lavender);
+            border-radius: 0 2rem 2rem 0;
+        }
+
+        .result h1,
+        .summary h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .circula-area {
+            width: 12rem;
+            height: 12rem;
+            margin: 2rem 0 1.75rem;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(var(--violet-blue), var(--persian-blue));
+        }
+
+        .score-number {
+            font-size: 4.5rem;
+            line-height: 1;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .score-total {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: hsla(241, 100%, 89%, 0.7);
+        }
+
+        .mark {
+            margin: 0 0 0.875rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .result p:last-child {
+            max-width: 14ch;
+            margin: 0;
+            font-size: 1.125rem;
+            line-height: 1.35;
+        }
+
+        .summary {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        .list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 0.875rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .reaction {
+            background: hsla(0, 100%, 67%, 0.08);
+            color: var(--light-red);
+        }
+
+        .memory {
+            background: hsla(39, 100%, 56%, 0.08);
+            color: var(--orangey-yellow);
+        }
+
+        .verbal {
+            background: hsla(166, 100%, 37%, 0.08);
+            color: var(--green-teal);
+        }
+
+        .visual {
+            background: hsla(234, 85%, 45%, 0.08);
+            color: var(--cobalt-blue);
+        }
+
+        .score {
+            color: hsla(224, 30%, 27%, 0.45);
+        }
+
+        .score strong {
+            color: var(--dark-gray-blue);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 0;
+            border-radius: 999px;
+            background: var(--dark-gray-blue);
+            color: var(--white);
+            font: inherit;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(var(--light-slate-blue), var(--light-royal-blue));
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid hsla(241, 81%, 54%, 0.35);
+            outline-offset: 4px;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 0;
+            }
+
+            .main {
+                width: 100%;
+                min-height: 100vh;
+                border-radius: 0;
+                flex-direction: column;
+            }
+
+            .result,
+            .summary {
+                width: 100%;
+            }
+
+            .result {
+                border-radius: 0 0 2rem 2rem;
+                padding: 1.5rem 2rem 2.5rem;
+            }
+
+            .result h1,
+            .summary h2 {
+                font-size: 1.25rem;
+            }
+
+            .circula-area {
+                width: 9rem;
+                height: 9rem;
+                margin: 1.5rem 0;
+            }
+
+            .score-number {
+                font-size: 3.5rem;
+            }
+
+            .mark {
+                font-size: 1.5rem;
+            }
+
+            .result p:last-child,
+            .list li,
+            .btn {
+                font-size: 1rem;
+            }
+
+            .summary {
+                padding: 1.5rem 1.875rem 2rem;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main class="main">
+    <div class="result">
+        <h1>Your Result</h1>
+        <div class="circula-area">
+            <span class="score-number">76</span>
+            <span class="score-total">of 100</span>
+        </div>
+        <p class="mark">Great</p>
+        <p>You scored higher than 65% of the people who have taken these tests</p>
+    </div>
+    <div class="summary">
+        <h2>Summary</h2>
+        <ul class="list">
+            <li class="reaction"><div class="label"><img src="assets/images/icon-reaction.svg" alt="">Reaction</div><div class="score"><strong>80</strong> / 100</div></li>
+            <li class="memory"><div class="label"><img src="assets/images/icon-memory.svg" alt="">Memory</div><div class="score"><strong>92</strong> / 100</div></li>
+            <li class="verbal"><div class="label"><img src="assets/images/icon-verbal.svg" alt="">Verbal</div><div class="score"><strong>61</strong> / 100</div></li>
+            <li class="visual"><div class="label"><img src="assets/images/icon-visual.svg" alt="">Visual</div><div class="score"><strong>73</strong> / 100</div></li>
+        </ul>
+        <button class="btn">Continue</button>
+    </div>
+</main>
+</body>
+</html>
